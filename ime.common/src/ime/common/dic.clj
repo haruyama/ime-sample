@@ -1,7 +1,4 @@
-(ns common.dic)
-
-(require '[clojure.contrib.string :as string])
-
+(ns ime.common.dic)
 
 (defn init []
   (let [ht (new java.util.HashMap)]
@@ -23,19 +20,14 @@
       (let [result (new java.util.ArrayList)]
         (doseq [i (range 1 (+ 1 (min m (count s))))]
           (let [r (subs s 0 i)]
-            (doseq [w (find- s)]
+            (doseq [w (find- r)]
               (.add result [r w])
               )
             )
           )
         result)
       )
-
-    (defn add-line [l]
-      (let [row (string/split #"\t" l)]
-        (add (str (first row)) (str (nth row 1)))))
-
-    {:add add :find find- :common_prefix_search common-prefix-search :add_line add-line}
+    {:add add :find find- :common_prefix_search common-prefix-search}
     )
   )
 
