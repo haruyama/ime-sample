@@ -6,6 +6,7 @@
          (let [dic (ime.common.dic/init)]
            ((:add dic) "あう" "あう")
            ((:add dic) "あう" "合う")
+           ((:add dic) "みんな" "みんな")
            (is (= ((:find dic) "あう") (hash-set "あう" "合う")))
 
            (is (= ((dic :find) "あ") (hash-set)))
