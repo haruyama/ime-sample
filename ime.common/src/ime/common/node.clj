@@ -1,15 +1,17 @@
 (ns ime.common.node)
 
 (defn init [w r endpos]
-  (let [score (ref 0.0) prev (ref false)]
+  (let [score (atom 0.0) prev (atom false)]
 
     (defn set-score! [s]
-      (dosync (ref-set score s))
-;      (reset! score s)
+;      (dosync (ref-set score s))
+      (reset! score s)
       )
 
     (defn set-prev! [p]
-      (dosync (ref-set prev p)))
+;      (dosync (ref-set prev p))
+      (reset! prev p)
+      )
 
     (defn length []
       (count r))

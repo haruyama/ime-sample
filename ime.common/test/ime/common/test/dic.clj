@@ -6,24 +6,16 @@
          (let [dic (ime.common.dic/init)]
            ((:add dic) "あう" "あう")
            ((:add dic) "あう" "合う")
-           (is (= ((:find dic) "あう") (doto
-                                        (new java.util.HashSet)
-                                        (.add "あう")
-                                        (.add "合う"))))
-           (is (= (.size ((:find dic) "あ")) 0))
+           (is (= ((:find dic) "あう") (hash-set "あう" "合う")))
 
-           (is (= ((:common_prefix_search dic) "あ" 16) (doto
-                                        (new java.util.ArrayList)
-                                                        )))
+           (is (= ((dic :find) "あ") (hash-set)))
+           (is (= (count ((:find dic) "あ")) 0))
 
-           (is (= ((:common_prefix_search dic) "あう" 16) (doto
-                                        (new java.util.ArrayList)
-                                        (.add ["あう" "あう"])
-                                        (.add ["あう" "合う"])
-                                                           ))
-               )
-           (is (= ((:common_prefix_search dic) "あ" 1) (doto
-                                        (new java.util.ArrayList)
-                                                        )))
+           (is (= ((:common_prefix_search dic) "あ" 16) []))
+
+           (is (= ((:common_prefix_search dic) "あう" 16) [["あう" "あう"] ["あう" "合う"]]
+                  ))
+           (is (= ((:common_prefix_search dic) "あう" 1) []))
            )
          )
+

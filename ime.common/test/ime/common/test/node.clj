@@ -16,6 +16,7 @@
          (is (= false ((:get_prev node2))))
          ((:set_prev! node2) node1)
          (is (= node1 ((:get_prev node2))))
+         (is (= 0 ((:length node2))))
 
          (is (= false ((:is_bos? node2))))
          (is (= true ((:is_eos? node2))))

@@ -1,31 +1,33 @@
 (ns ime.common.dic)
 
 (defn init []
-  (let [ht (new java.util.HashMap)]
+  (let [ht (atom (hash-map))]
 
     (defn add [r w]
-      (if (.containsKey ht r)
-        (.add (.get ht r) w)
-        (do
-          (let [s (new java.util.HashSet)]
-            (.add s w)
-            (.put ht r s)))))
+      (if (contains? @ht r)
+        (let [s (get @ht r)]
+          (reset! s (conj @s w)))
+        (let [s (atom (hash-set w))]
+          (reset! ht (assoc @ht r s)))))
 
     (defn find- [s]
-      (if (.containsKey ht s)
-        (.get ht s)
-        java.util.Collections/EMPTY_SET))
+;      @(get @ht s (atom (hash-set)))
+      (if (contains? @ht s)
+        @(get @ht s)
+        (hash-set)
+        )
+      )
 
     (defn common-prefix-search [s, m]
-      (let [result (new java.util.ArrayList)]
+      (let [result (atom [])]
         (doseq [i (range 1 (+ 1 (min m (count s))))]
           (let [r (subs s 0 i)]
             (doseq [w (find- r)]
-              (.add result [r w])
+              (reset! result (conj @result [r w]))
               )
             )
           )
-        result)
+        @result)
       )
     {:add add :find find- :common_prefix_search common-prefix-search}
     )
