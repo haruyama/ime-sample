@@ -13,14 +13,17 @@
       (reset! prev p)
       )
 
+    (defn is-bos? []
+      (if (= endpos 0) true false)
+      )
+
     (defn length []
       (count r))
 
-    (defn is-bos? []
-      (if (= endpos 0) true false))
-
     (defn is-eos? []
-      (if (and (= (length) 0) (not (= endpos 0))) true false))
+      (if (and (= (count r) 0) (not (= endpos 0))) true false)
+;      (if (and (= (length) 0) (not (= endpos 0))) true false)
+      )
 
     {:endpos endpos :word w :read r :get_score (fn [] @score) :get_prev (fn [] @prev) :set_score! set-score! :set_prev! set-prev!
      :length length :is_bos? is-bos? :is_eos? is-eos?

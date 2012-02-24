@@ -27,14 +27,16 @@
                 (reset! nodes (assoc @nodes (+ i 1) (atom [node]))))))))
       )
 
-
     (defn get-prevs [node]
-      (cond (node :is_eos?) @(get @nodes (- (node :endpos) 1))
-            (node :is_bos?) []
-            :else @(get @nodes (- (node :endpos) (node :length)))
+;      (println ((node :is_eos?)))
+;      (println (node :endpos))
+;      (println ((node :length)))
+      (cond ((node :is_eos?)) @(get @nodes (- (node :endpos) 1))
+            ((node :is_bos?)) []
+            :else @(get @nodes (- (node :endpos) ((node :length))))
             ))
 
-    {:get_nodes (fn [] @nodes)
+    {:get_nodes (fn [] (map (fn [n] @n) (vals @nodes)))
      :eos eos
      :get_prevs get-prevs
      }
