@@ -17,6 +17,7 @@
 
   (defn get-viterbi-result-list [node]
     (defn iter [n l]
+
       (if ((n :is_bos?))
         l
         (iter ((n :get_prev))

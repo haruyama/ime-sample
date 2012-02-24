@@ -24,22 +24,21 @@
             (swap! (nth nodes (+ i 1)) conj n)))))
 
     (let [
-          bos (node/make "" "" 0)
           eos (node/make "" "" (+ 1 (count s)))
+          bos (node/make "" "" 0)
           ]
       (swap! (nth nodes 0) conj  bos)
       (swap! (nth nodes (+ 1 (count s))) conj eos)
-      (map (fn [n] (n :is_eos?)) (flatten (fn [] (map (fn [n] @n) nodes))))
+;      (map (fn [n] ((n :is_eos?))) (flatten (fn [] (map (fn [n] @n) nodes))))
 
 
       (defn get-prevs [node]
-        ;      (println ((node :is_eos?)))
-        ;      (println (node :endpos))
-        ;      (println ((node :length)))
-        ;      (println (node :read))
-        ;      (println (node :length))
-        ;      (println (node :is_bos?))
-        ;      (println (node :is_eos?))
+;        (println (node :endpos))
+;        (println ((node :length)))
+;              (println (node :read))
+;              (println ((node :length)))
+;              (println ((node :is_bos?)))
+;              (println ((node :is_eos?)))
         (cond ((node :is_eos?)) @(nth nodes (- (node :endpos) 1))
               ((node :is_bos?)) []
               :else @(nth nodes (- (node :endpos) ((node :length))))

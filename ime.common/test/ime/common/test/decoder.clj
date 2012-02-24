@@ -17,6 +17,7 @@
          (is (= ((decoder :get_node_score) node2 false weight) 0.0))
 
          (is (= ((decoder :get_edge_score) node2 node3 false weight) 0.3))
+
          (is (= ((decoder :get_edge_score) node1 node3 false weight) 0.0))
          )
 
