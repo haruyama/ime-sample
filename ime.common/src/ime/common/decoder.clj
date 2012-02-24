@@ -3,7 +3,7 @@
 (require '[ime.common.node :as node])
 (require '[ime.common.graph :as graph])
 
-(defn init [node-features edge-features]
+(defn make [node-features edge-features]
   (defn get-node-score [node gold w]
     (reduce +
             (map (fn [f] (get w (f node) 0.0)) node-features)

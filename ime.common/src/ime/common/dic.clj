@@ -1,6 +1,6 @@
 (ns ime.common.dic)
 
-(defn init []
+(defn make []
   (let [ht (atom (hash-map))]
 
     (defn add [r w]

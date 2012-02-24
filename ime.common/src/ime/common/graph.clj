@@ -2,46 +2,54 @@
 
 (require '[ime.common.node :as node])
 
-(defn init [dic s]
-  (let [nodes (atom (hash-map))
-        bos (node/init "" "" 0)
-        eos (node/init "" "" (+ 1 (count s)))
+(defn make [dic s]
+  (let [nodes (vec (map atom (repeat (+ 2 (count s)) [])))
         ]
-    (reset! nodes (assoc @nodes 0 (atom [bos])))
-    (reset! nodes (assoc @nodes (+ 1 (count s)) (atom [eos])))
-
-    (doseq [i (range 0 (count s))]
+    (dotimes [i (count s)]
+;      (println eos)
+;      (println (eos :is_eos?))
+;      (println "hoge")
+;      (println ((eos :is_eos?)))
       (do
         (doseq [j (range (+ 1 i) (+ 1 (min (count s) (+ i 16))))]
           (let [r (subs s i j)]
             (doseq [w ((dic :find) r)]
-              (let [node (node/init w r j)]
-                (if (contains? @nodes j)
-                  (reset! (get @nodes j) (conj @(get @nodes j) node))
-                  (reset! nodes (assoc @nodes j (atom [node]))))))))
+;              (println ((eos :is_eos?)))
+              (let [n (node/make w r j)]
+;                (println ((eos :is_eos?)))
+                (swap! (nth nodes j) conj n)))))
+;        (println ((eos :is_eos?)))
         (let [r (subs s i (+ 1 i))]
-          (if (not (= r ""))
-            (let [node (node/init r r (+ i 1))]
-              (if (contains? @nodes (+ i 1))
-                (reset! (get @nodes (+ i 1)) (conj @(get @nodes (+ i 1)) node))
-                (reset! nodes (assoc @nodes (+ i 1) (atom [node]))))))))
+          (let [n (node/make r r (+ i 1))]
+            (swap! (nth nodes (+ i 1)) conj n)))))
+
+    (let [
+          bos (node/make "" "" 0)
+          eos (node/make "" "" (+ 1 (count s)))
+          ]
+      (swap! (nth nodes 0) conj  bos)
+      (swap! (nth nodes (+ 1 (count s))) conj eos)
+      (map (fn [n] (n :is_eos?)) (flatten (fn [] (map (fn [n] @n) nodes))))
+
+
+      (defn get-prevs [node]
+        ;      (println ((node :is_eos?)))
+        ;      (println (node :endpos))
+        ;      (println ((node :length)))
+        ;      (println (node :read))
+        ;      (println (node :length))
+        ;      (println (node :is_bos?))
+        ;      (println (node :is_eos?))
+        (cond ((node :is_eos?)) @(nth nodes (- (node :endpos) 1))
+              ((node :is_bos?)) []
+              :else @(nth nodes (- (node :endpos) ((node :length))))
+              ))
+
+      {:get_nodes (fn [] (map (fn [n] @n) nodes))
+       :eos eos
+       :get_prevs get-prevs
+       }
       )
-
-    (defn get-prevs [node]
-;      (println ((node :is_eos?)))
-;      (println (node :endpos))
-;      (println ((node :length)))
-      (cond ((node :is_eos?)) @(get @nodes (- (node :endpos) 1))
-            ((node :is_bos?)) []
-            :else @(get @nodes (- (node :endpos) ((node :length))))
-            ))
-
-    {:get_nodes (fn [] (map (fn [n] @n) (vals @nodes)))
-     :eos eos
-     :get_prevs get-prevs
-     }
     )
   )
-
-
 

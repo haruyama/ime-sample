@@ -9,10 +9,10 @@
 
 (deftest decoder1
          (def weight {"S不良\tRふりょう" 0.1 "S独特\tSな" 0.3})
-         (def node1 (node/init "不良" "ふりょう" 1))
-         (def node2 (node/init "独特" "どくとく" 1))
-         (def node3 (node/init "な" "な" 1))
-         (def decoder (decoder/init [(fn [n] (str "S" (n :word) "\tR" (n :read)))] [(fn [pn n] (str "S" (pn :word) "\tS" (n :word)))]))
+         (def node1 (node/make "不良" "ふりょう" 1))
+         (def node2 (node/make "独特" "どくとく" 1))
+         (def node3 (node/make "な" "な" 1))
+         (def decoder (decoder/make [(fn [n] (str "S" (n :word) "\tR" (n :read)))] [(fn [pn n] (str "S" (pn :word) "\tS" (n :word)))]))
          (is (= ((decoder :get_node_score) node1 false weight) 0.1))
          (is (= ((decoder :get_node_score) node2 false weight) 0.0))
 
@@ -21,19 +21,19 @@
          )
 
 (deftest decoder2
-         (let [dic (dic/init)]
+         (let [dic (dic/make)]
            ((:add dic) "あう" "あう")
            ((:add dic) "あう" "会う")
            ((:add dic) "みんな" "みんな")
            ((:add dic) "みん" "みん")
            (let [
-                 graph (graph/init dic "みんなあう")
+                 graph (graph/make dic "みんなあう")
                  weight {"S会う\tRあう" 0.5 "Sみんな\tS会う" 0.1}
-                 decoder (decoder/init [(fn [n] (str "S" (n :word) "\tR" (n :read)))] [(fn [pn n] (str "S" (pn :word) "\tS" (n :word)))])
+                 decoder (decoder/make [(fn [n] (str "S" (n :word) "\tR" (n :read)))] [(fn [pn n] (str "S" (pn :word) "\tS" (n :word)))])
                  ]
 ;             (println ((graph :get_nodes)))
-;             (println (((node/init "あう" "あう" 5) :length)))
-;             (println ((graph :get_prevs) (node/init "あう" "あう" 5)))
+;             (println (((node/make "あう" "あう" 5) :length)))
+;             (println ((graph :get_prevs) (node/make "あう" "あう" 5)))
              (println ((decoder :viterbi) graph weight))
              )
            )

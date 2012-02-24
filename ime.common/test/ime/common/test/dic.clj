@@ -3,7 +3,7 @@
   (:use [clojure.test]))
 
 (deftest dic
-         (let [dic (ime.common.dic/init)]
+         (let [dic (ime.common.dic/make)]
            ((:add dic) "あう" "あう")
            ((:add dic) "あう" "合う")
            ((:add dic) "みんな" "みんな")
