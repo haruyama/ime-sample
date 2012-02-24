@@ -20,4 +20,6 @@
 
          (is (= false ((:is_bos? node2))))
          (is (= true ((:is_eos? node2))))
+         (def node3 (ime.common.node/init "" "" 3))
+         (is (= true ((:is_eos? node3))))
          )

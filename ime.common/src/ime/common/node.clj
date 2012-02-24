@@ -18,9 +18,17 @@
       )
 
     (defn length []
+;      (println "is-eos?")
+;      (println r)
+;      (println w)
+;      (println endpos)
       (count r))
 
     (defn is-eos? []
+;      (println "is-eos?")
+;      (println r)
+;      (println w)
+;      (println endpos)
       (if (and (= (count r) 0) (not (= endpos 0))) true false)
 ;      (if (and (= (length) 0) (not (= endpos 0))) true false)
       )
@@ -30,4 +38,3 @@
      }
     )
   )
-
