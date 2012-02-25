@@ -6,7 +6,7 @@ I have not yet implemented 'train' and 'eval'.
 
 ## usage
 
-### dictionary and model
+### prepare a dictionary and a model
 
 * download, uncompress and extract 'https://gihyo.jp/assets/files/book/2012/978-4-7741-4993-6/download/imebook-sample.tar.gz'
 * change directory to 'imebook-sample'
@@ -17,7 +17,7 @@ I have not yet implemented 'train' and 'eval'.
 * install https://github.com/technomancy/leiningen
 * git clone https://github.com/haruyama/ime-sample.git
 * change directory to 'ime-sample'
-* copy 'mk.model' and 'juman.dic' from imebook-sample directory
+* copy 'mk.model' and 'juman.dic' from 'imebook-sample' directory to 'ime-sample' directory.
 * lein trampoline run -m ime.test
 * input ひらがな to stdio
 
