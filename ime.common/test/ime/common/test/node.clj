@@ -13,7 +13,7 @@
 
 
          (def node2 (ime.common.node/make "" "" 1))
-         (is (= false ((node2 :get_prev))))
+         (is (= nil ((node2 :get_prev))))
          ((node2 :set_prev!) node1)
          (is (= node1 ((node2 :get_prev))))
          (is (= 0 ((node2 :length))))
