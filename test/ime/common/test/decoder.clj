@@ -35,7 +35,7 @@
 ;             (println ((graph :get_nodes)))
 ;             (println (((node/make "あう" "あう" 5) :length)))
 ;             (println ((graph :get_prevs) (node/make "あう" "あう" 5)))
-             (println ((decoder :viterbi) graph weight))
+             (is (= (list ["みんな" "みんな"] ["会う" "あう"]) ((decoder :viterbi) graph weight)))
              )
            )
          )

@@ -13,22 +13,15 @@
                 ;      @(get @ht s (atom (hash-set)))
                 (if (contains? @ht s)
                   @(get @ht s)
-                  (hash-set)
-                  )
-                )
+                  (hash-set)))
 
         common-prefix-search (fn [s, m]
                                (let [result (atom [])]
                                  (doseq [i (range 1 (+ 1 (min m (count s))))]
                                    (let [r (subs s 0 i)]
                                      (doseq [w (find- r)]
-                                       (reset! result (conj @result [r w]))
-                                       )
-                                     )
-                                   )
-                                 @result)
-                               )
+                                       (reset! result (conj @result [r w])))))
+                                 @result))
         ]
     {:add add :find find- :common_prefix_search common-prefix-search}
-    )
-  )
+    ))
