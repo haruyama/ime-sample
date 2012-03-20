@@ -1,5 +1,7 @@
 (ns ime.common.dic)
 
+(require '[clojure.string :as string])
+
 (defn make []
   (let [ht (atom (hash-map))
         add (fn [r w]
@@ -25,3 +27,19 @@
         ]
     {:add add :find find- :common_prefix_search common-prefix-search}
     ))
+
+(defn read_dic [filename]
+  (let [
+        dic (make)
+        ]
+    (with-open [
+                fr (java.io.FileReader. filename)
+                br (java.io.BufferedReader. fr)
+                ]
+      (doseq [line (take-while (comp not nil?) (repeatedly #(.readLine br)))]
+        (let [
+              [r w pos] (string/split line #"\t" 3)
+              ]
+          ((dic :add) r w))))
+    dic))
+

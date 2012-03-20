@@ -47,18 +47,16 @@
         ((dic :add) r w)))))
 
 (defn -main [& args]
-  (let [dic (dic/make)]
-    (read_dic "juman.dic" dic)
-    (let [
-          weight (read_weight_map "mk.model" dic)
-          decoder (decoder/make [(fn [n] (str "S" (n :word))) (fn [n] (str "S" (n :word) "\tR" (n :read)))] [(fn [pn n] (str "S" (pn :word) "\tS" (n :word)))])
-          ]
-      (with-open [br (java.io.BufferedReader. *in*)]
-        (loop []
-          (let [line (.readLine br)]
-            (if (not (nil? line))
-              (do
-                (let [graph (graph/make dic line)]
-                  (println (string/join " " (map first ((decoder :viterbi) graph weight))))
-                  )
-                (recur)))))))))
+  (let [dic (dic/read_dic "juman.dic")
+        weight (read_weight_map "mk.model" dic)
+        decoder (decoder/make [(fn [n] (str "S" (n :word))) (fn [n] (str "S" (n :word) "\tR" (n :read)))] [(fn [pn n] (str "S" (pn :word) "\tS" (n :word)))])
+        ]
+    (with-open [br (java.io.BufferedReader. *in*)]
+      (loop []
+        (let [line (.readLine br)]
+          (if (not (nil? line))
+            (do
+              (let [graph (graph/make dic line)]
+                (println (string/join " " (map first ((decoder :viterbi) graph weight))))
+                )
+              (recur))))))))
