@@ -2,23 +2,23 @@
 
 This is a clojure implementation of 'https://gihyo.jp/assets/files/book/2012/978-4-7741-4993-6/download/imebook-sample.tar.gz'
 
-I have not yet implemented 'train' and 'eval'.
+I have not yet implemented 'eval'.
 
 ## usage
 
 ### prepare a dictionary and a model
 
-* download, uncompress and extract 'https://gihyo.jp/assets/files/book/2012/978-4-7741-4993-6/download/imebook-sample.tar.gz'
-* change directory to 'imebook-sample'
-* run 'ruby learn.rb train.cps --verbose > train.log'
-
-### run ime-sample
-
-* install https://github.com/technomancy/leiningen
+* install https://github.com/technomancy/leiningen. please use lein1.
 * git clone https://github.com/haruyama/ime-sample.git
 * change directory to 'ime-sample'
-* copy 'mk.model' and 'juman.dic' from 'imebook-sample' directory to 'ime-sample' directory.
-* lein trampoline run -m ime.test
+* cp original/juman.dic .
+* lein1 run -m ime.learn train.cps
+* cp test.model mk.model
+
+### run ime
+
+* lein1 trampoline run -m ime.test
+* wait 'load completed!'
 * input ひらがな to stdio
 
 ## License
@@ -53,7 +53,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-## Original License
+## Original License(applied to files under original/)
 
   Copyright (c) 2012, TOKUNAGA Hiroyuki
 
