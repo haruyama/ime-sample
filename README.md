@@ -11,7 +11,8 @@ I have not yet implemented 'eval'.
 * install https://github.com/technomancy/leiningen. please use lein1.
 * git clone https://github.com/haruyama/ime-sample.git
 * change directory to 'ime-sample'
-* cp original/juman.dic .
+* get and extract 'https://gihyo.jp/assets/files/book/2012/978-4-7741-4993-6/download/imebook-sample.tar.gz'
+* cp imebook-sample/juman.dic .
 * lein1 run -m ime.learn train.cps
 * cp test.model mk.model
 
@@ -53,7 +54,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-## Original License(applied to files under original/)
+## Original License
 
   Copyright (c) 2012, TOKUNAGA Hiroyuki
 
