@@ -51,6 +51,7 @@
         weight (read_weight_map "mk.model" dic)
         decoder (decoder/make [(fn [n] (str "S" (n :word))) (fn [n] (str "S" (n :word) "\tR" (n :read)))] [(fn [pn n] (str "S" (pn :word) "\tS" (n :word)))])
         ]
+    (println "load completed!")
     (with-open [br (java.io.BufferedReader. *in*)]
       (loop []
         (let [line (.readLine br)]
